@@ -29,7 +29,7 @@
     }
 
     function cleanup(effectFn) {
-      // 遍历 effectFn.deps 数组，从所有相关联的依赖集合中清除此副作用函数
+      // 遍历 effectFn.deps 数组，从所有相关联的依赖集合中清除此副作用函数，后续此副作用函数重新执行时，会构建最新的依赖关系
       for (let i = 0; i < effectFn.deps.length; i++) {
         // deps 是依赖集合
         const deps = effectFn.deps[i]

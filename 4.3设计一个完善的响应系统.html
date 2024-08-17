@@ -42,17 +42,21 @@
       // 一个匿名的副作用函数
       () => {
         console.log('effect run')
+        // 触发 text 字段读取操作
         document.body.innerText = obj.text
       }
     )
     // 1 秒后修改响应式数据
     setTimeout(() => {
+      // 触发 text 字段设置操作
       obj.text = 'hello vue3'
     }, 1000)
 
     setTimeout(() => {
+      // 触发 text 字段设置操作，新增字段
       // 存在的问题：
       // 副作用函数中并没有读取 notExist 属性的值
+      // proxy 是针对于整个对象进行代理，新增属性也会触发设置操作，即 set() 的执行
       // 仍然触发了 effect 函数执行，原因在于我们没有在副作用函数与被操作的目标字段之间建立明确的联系
       obj.notExist = 'hello vue3'
     }, 2000)
