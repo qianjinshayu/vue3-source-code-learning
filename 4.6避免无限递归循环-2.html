@@ -111,11 +111,7 @@
     // 在一个 effect() 中渲染另一个 effect()，发生了嵌套
     effect(() => {
       console.log('effect run')
-
-      // 存在问题：无限递归地调用自己，于是就产生了栈溢出
-      // 原因在于这个语句中，既会读取 obj.foo 的值，又会设置 obj.foo 的值
-      // 读取 obj.foo 的值，这会触发 track 操作，将当前副作用函数收集到“桶”中，接着将其加 1 后再赋值给 obj.foo，此时会触发trigger 操作，即把“桶”中的副作用函数取出并执行。
-      // 但问题是该副作用函数正在执行中，还没有执行完毕，就要开始下一次的执行
+      
       obj.foo++
       console.log('obj.foo', obj.foo)
     })
